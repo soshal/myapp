@@ -2,8 +2,8 @@ package services
 
 import (
     "github.com/dgrijalva/jwt-go"
-    "myapp/config"
-    "myapp/models"
+    "assignment_project/config"
+    "assignment_project/models"
     "time"
 )
 

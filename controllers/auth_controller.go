@@ -2,8 +2,8 @@ package controllers
 
 import (
     "github.com/gin-gonic/gin"
-    "myapp/models"
-    "myapp/services"
+    "assignment_project/models"
+    "assignment_project/services"
     "net/http"
 )
 

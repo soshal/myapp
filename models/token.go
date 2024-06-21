@@ -2,7 +2,7 @@ package models
 
 import (
     "github.com/dgrijalva/jwt-go"
-    "myapp/config"
+    "assignment_project/config"
     "errors"
 )
 

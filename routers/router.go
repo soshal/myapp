@@ -2,9 +2,9 @@ package routers
 
 import (
     "github.com/gin-gonic/gin"
-    "myapp/controllers"
-    "myapp/config"
-    "myapp/models"
+    "assignment_project/controllers"
+    "assignment_project/config"
+    "assignment_project/models"
 )
 
 func SetupRoutes(r *gin.Engine) {
