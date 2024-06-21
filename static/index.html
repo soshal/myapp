@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gin JWT RBAC App</title>
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    alert('Login successful!');
+                } else {
+                    alert('Login failed!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function callBroker() {
+            const token = localStorage.getItem('token');
+
+            fetch('/broker', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to  App</h1>
+    <div>
+        <h2>Login</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <button onclick="login()">Login</button>
+    </div>
+    <div>
+        <h2>Broker</h2>
+        <button onclick="callBroker()">Call Broker</button>
+    </div>
+</body>
+</html>
