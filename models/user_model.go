@@ -1,9 +1,9 @@
 package models
 
 import (
+    "assignment_project/config"
     "database/sql"
     "errors"
-    "myapp/config"
 )
 
 var (

@@ -1,8 +1,8 @@
 package config
 
 import (
+    "assignment_project/models"
     "github.com/gin-gonic/gin"
-    "myapp/models"
     "net/http"
     "strings"
 )

@@ -2,8 +2,8 @@ package main
 
 import (
     "github.com/gin-gonic/gin"
-    "myapp/routers"
-    "myapp/config"
+    "assignment_project/config"
+    "assignment_project/routers"
 )
 
 func main() {

@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gin JWT RBAC App</title>
+    <title>Assignment Project</title>
     <script>
+        let token = "";
+
         function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
             fetch('/login', {
                 method: 'POST',
@@ -18,42 +20,89 @@
             .then(response => response.json())
             .then(data => {
                 if (data.token) {
-                    localStorage.setItem('token', data.token);
-                    alert('Login successful!');
+                    token = data.token;
+                    alert('Login successful');
+                    document.getElementById("login-form").style.display = "none";
+                    document.getElementById("main-content").style.display = "block";
+                    showRoleSpecificContent(data.role);
                 } else {
-                    alert('Login failed!');
+                    alert('Login failed');
                 }
             })
             .catch(error => console.error('Error:', error));
         }
 
-        function callBroker() {
-            const token = localStorage.getItem('token');
+        function showRoleSpecificContent(role) {
+            if (role === 'Sales') {
+                document.getElementById("customer-management").style.display = "block";
+                document.getElementById("billing-management").style.display = "block";
+            } else if (role === 'Accountant') {
+                document.getElementById("billing-management").style.display = "block";
+                document.getElementById("payroll-management").style.display = "block";
+            } else if (role === 'HR') {
+                document.getElementById("payroll-management").style.display = "block";
+            } else if (role === 'Administrator') {
+                document.getElementById("user-management").style.display = "block";
+            }
+        }
 
-            fetch('/broker', {
+        function callAPI(endpoint, method) {
+            fetch(endpoint, {
+                method: method,
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
                 }
             })
             .then(response => response.json())
-            .then(data => alert(data.message))
+            .then(data => alert(JSON.stringify(data)))
             .catch(error => console.error('Error:', error));
         }
     </script>
+    <style>
+        #main-content > div {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to  App</h1>
-    <div>
+    <h1>Welcome to the Assignment Project</h1>
+
+    <div id="login-form">
         <h2>Login</h2>
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br><br>
+        <input type="text" id="username" name="username" required>
+        <br>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br><br>
+        <input type="password" id="password" name="password" required>
+        <br>
         <button onclick="login()">Login</button>
     </div>
-    <div>
-        <h2>Broker</h2>
-        <button onclick="callBroker()">Call Broker</button>
+
+    <div id="main-content">
+        <div id="customer-management">
+            <h2>Customer Management</h2>
+            <button onclick="callAPI('/customers', 'GET')">Get Customers</button>
+            <button onclick="callAPI('/customers', 'POST')">Create Customer</button>
+        </div>
+
+        <div id="billing-management">
+            <h2>Billing Management</h2>
+            <button onclick="callAPI('/billing', 'GET')">Get Billing Info</button>
+            <button onclick="callAPI('/billing', 'POST')">Create Billing Entry</button>
+        </div>
+
+        <div id="payroll-management">
+            <h2>Payroll Management</h2>
+            <button onclick="callAPI('/payroll', 'GET')">Get Payroll Info</button>
+            <button onclick="callAPI('/payroll', 'POST')">Create Payroll Entry</button>
+        </div>
+
+        <div id="user-management">
+            <h2>User Management</h2>
+            <button onclick="callAPI('/users', 'GET')">Get Users</button>
+            <button onclick="callAPI('/users', 'POST')">Create User</button>
+        </div>
     </div>
 </body>
 </html>
