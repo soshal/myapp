@@ -7,6 +7,7 @@ import (
     "net/http"
 )
 
+
 func Login(c *gin.Context) {
     var credentials models.UserCredentials
     if err := c.ShouldBindJSON(&credentials); err != nil {
