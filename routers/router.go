@@ -17,9 +17,6 @@ func SetupRoutes(r *gin.Engine) {
         auth.GET("/", func(c *gin.Context) {
             c.JSON(http.StatusOK, gin.H{"message": "Welcome!"})
         })
-        auth.GET("/broker", func(c *gin.Context) {
-            c.JSON(http.StatusOK, gin.H{"message": "Hello from the Broker!"})
-        })
 
         // Customer Management
         auth.GET("/customers", config.AuthorizeRoles(string(models.RoleSales), string(models.RoleAdministrator)), controllers.GetCustomers)
